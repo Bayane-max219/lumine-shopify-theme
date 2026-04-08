@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "product-form": {
+      "type": "product-form",
+      "settings": {}
+    }
+  },
+  "order": ["product-form"]
+}

@@ -1,0 +1,69 @@
+<section class="product-page section-padding">
+  <div class="container product-layout">
+    <div class="product-gallery">
+      {%- for image in product.images -%}
+        <div class="product-gallery-item{% if forloop.first %} active{% endif %}" data-index="{{ forloop.index0 }}">
+          <img
+            src="{{ image | image_url: width: 800 }}"
+            alt="{{ image.alt | escape }}"
+            width="800"
+            loading="{{ forloop.first | ternary: 'eager', 'lazy' }}"
+          >
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="product-details">
+      <p class="product-vendor">{{ product.vendor }}</p>
+      <h1 class="product-title">{{ product.title }}</h1>
+
+      <div class="product-price" id="price-{{ product.id }}">
+        {%- if product.compare_at_price > product.price -%}
+          <span class="price-sale">{{ product.price | money }}</span>
+          <span class="price-compare">{{ product.compare_at_price | money }}</span>
+        {%- else -%}
+          <span class="price">{{ product.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      {%- form 'product', product, id: 'product-form', data-product-form: '' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="variant-id">
+
+        {%- for option in product.options_with_values -%}
+          <div class="product-option">
+            <label class="option-label">{{ option.name }}</label>
+            <div class="option-values">
+              {%- for value in option.values -%}
+                <button
+                  type="button"
+                  class="option-btn{% if option.selected_value == value %} active{% endif %}"
+                  data-option-position="{{ option.position }}"
+                  data-value="{{ value }}"
+                >{{ value }}</button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endfor -%}
+
+        <button type="submit" class="btn btn-primary btn-full" id="add-to-cart">
+          {%- if product.available -%}
+            Add to Cart
+          {%- else -%}
+            Sold Out
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Form",
+  "settings": []
+}
+{% endschema %}

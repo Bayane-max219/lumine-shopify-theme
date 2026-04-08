@@ -1,0 +1,115 @@
+<section class="featured-collection section-padding">
+  <div class="container">
+    {%- if section.settings.title != blank -%}
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subtitle != blank -%}
+      <p class="section-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+
+    {%- assign collection = collections[section.settings.collection] -%}
+    {%- if collection != blank -%}
+      <div class="product-grid">
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          <div class="product-card">
+            <a href="{{ product.url }}" class="product-card-link">
+              <div class="product-card-image">
+                {%- if product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    width="600"
+                    height="750"
+                    loading="lazy"
+                  >
+                  {%- if product.images[1] -%}
+                    <img
+                      src="{{ product.images[1] | image_url: width: 600 }}"
+                      alt="{{ product.images[1].alt | escape }}"
+                      class="product-card-image-hover"
+                      width="600"
+                      height="750"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="product-badge">Sale</span>
+                {%- endif -%}
+              </div>
+              <div class="product-card-info">
+                <p class="product-vendor">{{ product.vendor }}</p>
+                <h3 class="product-title">{{ product.title }}</h3>
+                <div class="product-price">
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="price-sale">{{ product.price | money }}</span>
+                    <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                  {%- else -%}
+                    <span class="price">{{ product.price | money }}</span>
+                  {%- endif -%}
+                </div>
+              </div>
+            </a>
+            <button
+              class="btn-quick-add"
+              data-product-id="{{ product.variants.first.id }}"
+            >Add to Cart</button>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.show_view_all -%}
+        <div class="section-cta">
+          <a href="{{ collection.url }}" class="btn btn-outline">View All</a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Handpicked pieces for the modern wardrobe"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 12,
+      "step": 2,
+      "default": 4,
+      "label": "Products to show"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection"
+    }
+  ]
+}
+{% endschema %}

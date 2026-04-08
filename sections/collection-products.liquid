@@ -1,0 +1,72 @@
+<section class="collection-page section-padding">
+  <div class="container">
+    <div class="collection-header">
+      <h1 class="page-title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="collection-description">{{ collection.description }}</p>
+      {%- endif -%}
+      <p class="collection-count">{{ collection.products_count }} products</p>
+    </div>
+
+    <div class="product-grid">
+      {%- for product in collection.products -%}
+        <div class="product-card">
+          <a href="{{ product.url }}" class="product-card-link">
+            <div class="product-card-image">
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  alt="{{ product.featured_image.alt | escape }}"
+                  width="600"
+                  height="750"
+                  loading="lazy"
+                >
+                {%- if product.images[1] -%}
+                  <img
+                    src="{{ product.images[1] | image_url: width: 600 }}"
+                    alt="{{ product.images[1].alt | escape }}"
+                    class="product-card-image-hover"
+                    width="600"
+                    height="750"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- endif -%}
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-badge">Sale</span>
+              {%- endif -%}
+            </div>
+            <div class="product-card-info">
+              <p class="product-vendor">{{ product.vendor }}</p>
+              <h3 class="product-title">{{ product.title }}</h3>
+              <div class="product-price">
+                {%- if product.compare_at_price > product.price -%}
+                  <span class="price-sale">{{ product.price | money }}</span>
+                  <span class="price-compare">{{ product.compare_at_price | money }}</span>
+                {%- else -%}
+                  <span class="price">{{ product.price | money }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          </a>
+          <button class="btn-quick-add" data-product-id="{{ product.variants.first.id }}">Add to Cart</button>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <div class="pagination">
+        {{ paginate | default_pagination }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Products",
+  "settings": []
+}
+{% endschema %}

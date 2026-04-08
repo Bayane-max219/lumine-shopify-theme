@@ -1,0 +1,21 @@
+<section class="page-content section-padding">
+  <div class="container page-inner">
+    <h1 class="page-title">{{ page.title }}</h1>
+    <div class="page-body rte">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+<style>
+.page-inner { max-width: 800px; margin: 0 auto; }
+.page-body { font-size: 15px; line-height: 1.8; color: var(--color-text-muted); margin-top: 24px; }
+.page-body a { color: var(--color-accent); text-decoration: underline; }
+</style>
+
+{% schema %}
+{
+  "name": "Page Content",
+  "settings": []
+}
+{% endschema %}

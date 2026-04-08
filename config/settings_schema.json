@@ -1,0 +1,33 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Lumine",
+    "theme_version": "1.0.0",
+    "theme_author": "Bayane",
+    "theme_documentation_url": "https://github.com/Bayane-max219",
+    "theme_support_url": "https://github.com/Bayane-max219"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#c9a84c"
+      },
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "Background color",
+        "default": "#fafaf8"
+      }
+    ]
+  }
+]

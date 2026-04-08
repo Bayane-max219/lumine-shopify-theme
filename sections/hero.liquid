@@ -1,0 +1,62 @@
+<section class="hero" style="{% if section.settings.bg_image != blank %}background-image: url('{{ section.settings.bg_image | image_url: width: 1600 }}');{% endif %}">
+  <div class="hero-overlay"></div>
+  <div class="hero-content container">
+    {%- if section.settings.subtitle != blank -%}
+      <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
+    {%- endif -%}
+    <h1 class="hero-title">{{ section.settings.title }}</h1>
+    {%- if section.settings.description != blank -%}
+      <p class="hero-description">{{ section.settings.description }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      <a href="{{ section.settings.button_url }}" class="btn btn-primary">{{ section.settings.button_label }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "New Collection 2026"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Elegance Redefined"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover our curated selection of timeless fashion pieces."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}
